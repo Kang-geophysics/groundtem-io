@@ -1,6 +1,6 @@
 # groundtem-io
 
-Unofficial Python reader and plotting utilities for GroundTEM time-domain electromagnetic (TDEM) data files:
+Unofficial Python reader and plotting utilities for ABEM GroundTEM i10 time-domain electromagnetic (TDEM) data files:
 
 - **`.stb` binary stack files** (`read_stb`, `StbFile`) — extracts processed gate center times, GPS coordinates, and all individual Low-Moment (LM) and High-Moment (HM) stack records and instrument-reported relative standard deviations.
 - **`.stn` station metadata files** (`read_stn`) — parses station/line numbers and GPS coordinates.

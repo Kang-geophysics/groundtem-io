@@ -58,20 +58,20 @@ plt.show()
 
 ![Single Station Decay and SNR Plot](https://raw.githubusercontent.com/Kang-geophysics/groundtem-io/main/docs/images/station_plot.png)
 
-#### How to Interpret the `plot_station` / `plot_decay` Figures
+#### How to Read the Plots
 
-- **Left Panel — Transient Decay Curves ($\log\text{–}\log$)**
-  - **Solid lines with filled circles (`LM mean`, `HM mean`)**: Mean transient decay response ($|\partial B / \partial t| \cdot I \cdot N_{\text{tx}}$ in $\text{V/m}^2$) averaged across all saved stacks, plotted with $\pm 1\text{ SEM}$ vertical error bars.
-  - **Open (unfilled) circles**: Late-time gates where the mean signal reverses sign (negative values plotted at their absolute magnitude $|-d|$ on the logarithmic axis), indicating noise dominance or sign reversal.
-  - **Translucent dots (`stacks=True`)**: Individual raw stack realizations stored in the `.stb` file (subsampled by `stack_stride`), illustrating stack-to-stack repeatability and ambient electromagnetic noise scatter.
-  - **Colored dashed lines (`LM SEM (noise)`, `HM SEM (noise)`)**: Gate-by-gate **Standard Error of the Mean ($\text{SEM}$)**, representing the effective noise floor for each moment:
-    $$\text{SEM} = \max\!\left(\text{SEM}_{\text{emp}},\, \text{SEM}_{\text{rep}}\right)$$
-    where $\text{SEM}_{\text{emp}} = s / \sqrt{N}$ is the empirical standard error across $N$ stacks and $\text{SEM}_{\text{rep}}$ is the propagated instrument-reported stack uncertainty. Where the solid decay curve meets the dashed SEM line, the signal has reached the noise floor.
-- **Right Panel — Signal-to-Noise Ratio ($\text{SNR} = \text{mean} / \text{SEM}$)**
-  - **Blue / Red curves (`LM`, `HM`)**: Gate-by-gate SNR plotted on a symmetric log (`symlog`) vertical scale so both high-SNR early gates and negative/near-zero late gates are clearly visible.
-  - **Black dotted horizontal line (`SNR = 3 threshold`)**: Minimum quality threshold controlled by `snr_min` (default `3.0`).
-    - **Above the dotted line ($\text{SNR} \ge 3$)**: Reliable data gates where the mean signal amplitude is at least $3\times$ the standard error.
-    - **Below the dotted line ($\text{SNR} < 3$)**: Noise-dominated late-time gates that should typically be culled (masked) prior to 1D/2D geophysical inversion.
+- **Left Panel — Decay Curves (log–log)**
+  - **Solid lines with filled circles (`LM mean`, `HM mean`)**: The final **averaged decay curve** from all repeated measurements (stacks) at that station, shown with vertical error bars (`±1 SEM`).
+  - **Light background dots (`stacks=True`)**: The **individual repeated measurements** saved in the `.stb` file *before* averaging (every 10th stack is shown by default; pass `stacks=False` to hide them).
+    - At **early times**, the dots sit tightly on the solid curve, meaning every repeat measurement gave nearly the same value (strong, clean signal).
+    - At **late times**, the dots scatter widely up and down, showing that the ground signal has faded and background noise is taking over.
+  - **Open (unfilled) circles**: Late-time gates where the average value became **negative** (drawn as `|value|` so they can be seen on a log scale), a typical sign of noise at late times.
+  - **Colored dashed lines (`LM SEM (noise)`, `HM SEM (noise)`)**: The estimated **noise floor** (Standard Error of the Mean, `SEM`) at each time gate. Where the solid curve drops down to touch this dashed line, the signal has reached the noise level.
+- **Right Panel — Signal-to-Noise Ratio (`SNR = mean / SEM`)**
+  - **Blue / Red curves (`LM`, `HM`)**: Shows how many times stronger the average signal is compared to the noise (`SEM`) at each time gate.
+  - **Black dotted horizontal line (`SNR = 3 threshold`)**: A simple **quality cutoff line** (set by `snr_min=3.0`).
+    - **Above the dotted line (`SNR ≥ 3`)**: Reliable data gates where the signal is at least 3 times larger than the noise.
+    - **Below the dotted line (`SNR < 3`)**: Noisy late-time gates that are usually removed before inversion.
 
 ---
 
@@ -136,7 +136,7 @@ print(summary_df)
 | `summarize_protocols(paths)` | Summarize all `.sts` protocol files in a directory or list into a `pandas.DataFrame`. |
 | `plot_decay(ax, source, ...)` | Plot LM and HM decay curves, SEM noise floor, and optional raw stacks on a Matplotlib `Axes`. |
 | `plot_station(source, snr_min=3.0, ...)` | Create a two-panel figure showing LM/HM decay curves (left) and gate-by-gate SNR with threshold line (right). |
-| `sem(record, moment)` | Compute $\max(\text{SEM}_{\text{emp}}, \text{SEM}_{\text{rep}})$ for a station row dictionary or `pandas.Series`. |
+| `sem(record, moment)` | Compute `max(SEM_emp, SEM_rep)` for a station row dictionary or `pandas.Series`. |
 
 ---
 

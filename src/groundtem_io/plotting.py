@@ -60,10 +60,10 @@ def plot_decay(
             for s in info["stacks"][::stack_stride]:
                 ax.loglog(t, np.abs(s), ".", color=col[m], alpha=0.12, ms=3)
         pos = d > 0
-        ax.errorbar(t[pos], d[pos], e[pos], fmt="o-", color=col[m], ms=3, lw=1, label=m)
+        ax.errorbar(t[pos], d[pos], e[pos], fmt="o-", color=col[m], ms=3, lw=1, label=f"{m} mean")
         if np.any(~pos):
             ax.errorbar(t[~pos], -d[~pos], e[~pos], fmt="o", mfc="none", color=col[m], ms=4)
-        ax.loglog(t, e, "--", color=col[m], lw=0.8, alpha=0.7)
+        ax.loglog(t, e, "--", color=col[m], lw=0.8, alpha=0.7, label=f"{m} SEM (noise)")
 
     ax.set_xscale("log")
     ax.set_yscale("log")
@@ -87,7 +87,7 @@ def plot_station(
     axs[0].set_title(title)
     axs[0].set_xlabel("time (s)")
     axs[0].set_ylabel("|dB/dt| x I x N_tx (V/m²)")
-    axs[0].legend()
+    axs[0].legend(fontsize=8)
 
     if isinstance(source, StbFile):
         polarity = -1 if (len(source.stacks["HM"]) > 0 and source.data("HM").mean(0)[:5].mean() < 0) else 1
@@ -109,10 +109,11 @@ def plot_station(
                 label=m,
             )
 
-    axs[1].axhline(snr_min, color="k", ls=":")
+    axs[1].axhline(snr_min, color="k", ls=":", label=f"SNR = {snr_min:g} threshold")
     axs[1].set_yscale("symlog")
     axs[1].set_title("SNR = mean / SEM")
     axs[1].set_xlabel("time (s)")
-    axs[1].legend()
+    axs[1].set_ylabel("SNR")
+    axs[1].legend(fontsize=8)
     fig.tight_layout()
     return fig, axs

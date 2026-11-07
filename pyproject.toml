@@ -1,6 +1,6 @@
 [project]
 name = "groundtem-io"
-version = "0.1.1"
+version = "0.1.2"
 description = "Unofficial Python reader and plotting utilities for GroundTEM .stb, .stn, and .sts files"
 readme = "README.md"
 license = { text = "MIT" }

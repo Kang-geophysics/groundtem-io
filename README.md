@@ -77,6 +77,12 @@ print("HM dipole moment (A*m^2):", proto.dipole_moment("HM"))
 
 ---
 
+## Acknowledgments
+
+Developed with the assistance of **Google Antigravity**.
+
+---
+
 ## License
 
 Released under the [MIT License](LICENSE).

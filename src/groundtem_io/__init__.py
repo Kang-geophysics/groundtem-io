@@ -4,7 +4,7 @@ from .plotting import plot_decay, plot_station, sem
 from .protocol import Moment, Protocol, read_protocol, summarize_protocols
 from .stb import StbFile, read_sounding_dir, read_stb, read_stn, read_survey
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "StbFile",

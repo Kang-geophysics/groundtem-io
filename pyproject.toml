@@ -1,6 +1,6 @@
 [project]
 name = "groundtem-io"
-version = "0.1.0"
+version = "0.1.1"
 description = "Unofficial Python reader and plotting utilities for GroundTEM .stb, .stn, and .sts files"
 readme = "README.md"
 license = { text = "MIT" }
@@ -37,3 +37,11 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/groundtem_io"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/README.md",
+    "/LICENSE",
+    "/pyproject.toml",
+]

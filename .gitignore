@@ -19,3 +19,8 @@ env/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Local field data & test environments
+PUBLISHING_GUIDE.md
+261021_3m/
+test_pypi/
